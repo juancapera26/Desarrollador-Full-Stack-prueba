@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true">
+  <main class="register-shell">
+    <section class="register-card" aria-labelledby="register-title">
+      <div class="brand-mark" aria-hidden="true">C</div>
+      <p class="eyebrow">COMERCIO</p>
+      <h1 id="register-title">Crea tu cuenta</h1>
+      <p class="intro">
+        Regístrate para explorar nuestro catálogo y preparar tus compras.
+      </p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+        <ion-item lines="none" [class.invalid]="hasError('name')">
+          <ion-input
+            label="Nombre completo"
+            labelPlacement="stacked"
+            formControlName="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Ej. María Pérez"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('name')"
+          >Ingresa tu nombre (mínimo 2 caracteres).</ion-note
+        >
+
+        <ion-item lines="none" [class.invalid]="hasError('email')">
+          <ion-input
+            label="Correo electrónico"
+            labelPlacement="stacked"
+            formControlName="email"
+            type="email"
+            autocomplete="email"
+            placeholder="tu@correo.com"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('email')"
+          >Ingresa un correo válido.</ion-note
+        >
+
+        <ion-item lines="none" [class.invalid]="hasError('password')">
+          <ion-input
+            label="Contraseña"
+            labelPlacement="stacked"
+            formControlName="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Mínimo 6 caracteres"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('password')"
+          >La contraseña debe tener al menos 6 caracteres.</ion-note
+        >
+
+        <ion-item lines="none" [class.invalid]="hasError('confirmPassword')">
+          <ion-input
+            label="Confirmar contraseña"
+            labelPlacement="stacked"
+            formControlName="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Repite tu contraseña"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('confirmPassword')"
+          >Las contraseñas deben coincidir.</ion-note
+        >
+
+        <ion-text color="danger" *ngIf="errorMessage"
+          ><p class="form-message" role="alert">{{ errorMessage }}</p></ion-text
+        >
+        <ion-text color="success" *ngIf="successMessage"
+          ><p class="form-message" role="status">
+            {{ successMessage }}
+          </p></ion-text
+        >
+        <ion-button expand="block" type="submit">Crear cuenta</ion-button>
+      </form>
+
+      <p class="login-hint">
+        ¿Ya tienes una cuenta? El inicio de sesión se habilitará en HU02.
+      </p>
+    </section>
+  </main>
+</ion-content>
