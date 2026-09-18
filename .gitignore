@@ -7,3 +7,14 @@ coverage/
 !.env.example
 *.log
 node_modules
+
+# Herramientas y datos temporales usados para compilar/probar Android y Firebase
+.tmp-*/
+
+# Scripts temporales de depuración local
+cdp_*.js
+step*.js
+
+# Salidas generadas por Angular/Cordova
+/www/
+/platforms/
