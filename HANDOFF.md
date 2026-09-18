@@ -89,6 +89,28 @@ La pantalla inicialmente aparecía en blanco. El DOM cargaba correctamente y no 
 
 No eliminar esas reglas de layout sin verificar nuevamente el renderizado.
 
+## Bug crítico encontrado y corregido: componentes Ionic invisibles en build de producción/APK
+
+Al ejecutar la APK en un emulador Android (y también al servir el build de producción `www/` fuera de Cordova), la pantalla `/register` mostraba el título y los textos, pero **los campos del formulario y el botón "Crear cuenta" no se renderizaban** (aparecían como texto plano sin estilo, sin inputs). En `ng serve` (modo desarrollo) todo se veía correctamente, lo que ocultaba el problema.
+
+Causa raíz: `register.page.ts` importaba `IonicModule` desde `'@ionic/angular'` (API basada en NgModule) dentro de un componente standalone. Con el nuevo builder esbuild de Angular 20 (`@angular-devkit/build-angular:application`), la optimización de producción (`optimization: true`, usada por defecto en `ng build`) hace tree-shaking del registro de custom elements que depende de `IonicModule`, y los componentes (`ion-input`, `ion-item`, `ion-button`, `ion-content`, etc.) nunca llegan a registrarse (`customElements.get(...)` devuelve `undefined`). `ion-app` sí se registraba porque `app.component.ts` ya usaba correctamente los componentes standalone de `@ionic/angular/standalone`.
+
+Diagnóstico realizado:
+
+- Se comparó el mismo código en `ng serve` (funciona) vs. `ng build` producción (falla).
+- Se aisló con `ng build --optimization=false` (funciona) vs. build de producción por defecto (falla), confirmando que la optimización era la causa.
+- Se inspeccionó el WebView de Android vía Chrome DevTools Protocol (`adb forward` + `webview_devtools_remote_*`), confirmando `customElements.get('ion-input')` como `undefined` en producción.
+
+Corrección aplicada en `src/app/pages/register/register.page.ts`: se reemplazó `import { IonicModule } from '@ionic/angular'` por imports individuales de componentes standalone: `import { IonButton, IonContent, IonInput, IonItem, IonNote, IonText } from '@ionic/angular/standalone'`, y se listaron esos componentes en el array `imports` del `@Component` en lugar de `IonicModule`.
+
+Verificación tras la corrección:
+
+- `ng build` (producción) + servido estático: formulario e input visibles, validaciones y registro funcionan.
+- APK reinstalada en emulador Android (Pixel_5_API_34): formulario, validaciones, registro y mensaje de duplicado funcionan visualmente de forma idéntica al navegador.
+- `npm test` (con `CHROME_BIN` apuntando a Microsoft Edge, ya que Chrome no está instalado en este entorno): 3/3 pruebas exitosas.
+
+**Regla para futuras historias**: nunca importar `IonicModule` desde `'@ionic/angular'` en componentes standalone. Importar siempre los componentes Ionic individuales desde `'@ionic/angular/standalone'` y añadirlos al array `imports` del componente. Verificar cualquier HU nueva con un build de producción real (`ng build` sin `--optimization=false`), no solo con `ng serve`, antes de darla por terminada.
+
 ## Verificación realizada
 
 - TypeScript de la aplicación: correcto.
