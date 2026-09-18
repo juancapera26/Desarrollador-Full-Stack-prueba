@@ -1,0 +1,112 @@
+<ion-content [fullscreen]="true">
+  <main class="cart-shell">
+    <header class="cart-header">
+      <div>
+        <p class="eyebrow">COMERCIO</p>
+        <h1>Mi carrito</h1>
+        <p class="intro">Revisa las cantidades y el total de tu compra.</p>
+      </div>
+      <ion-button fill="outline" (click)="goToCatalog()"
+        >Volver al catálogo</ion-button
+      >
+    </header>
+
+    <p *ngIf="loading" class="cart-state" role="status">Cargando carrito...</p>
+
+    <section *ngIf="errorMessage" class="cart-state error-state" role="alert">
+      <p>{{ errorMessage }}</p>
+      <ion-button size="small" (click)="loadCart()">Reintentar</ion-button>
+    </section>
+
+    <ng-container *ngIf="!loading && !errorMessage && cart">
+      <p *ngIf="actionMessage" class="action-message" role="status">
+        {{ actionMessage }}
+      </p>
+
+      <section
+        *ngIf="cart.items.length; else emptyCart"
+        class="cart-layout"
+        aria-label="Productos del carrito"
+      >
+        <div class="cart-items">
+          <ion-card *ngFor="let item of cart.items" class="cart-item">
+            <img
+              [src]="item.product.image"
+              [alt]="'Imagen de ' + item.product.name"
+            />
+            <ion-card-header>
+              <ion-card-title>{{ item.product.name }}</ion-card-title>
+              <p class="unit-price">
+                {{ item.product.price | currency:'COP':'symbol':'1.0-0' }} por
+                unidad
+              </p>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="quantity-row" aria-label="Control de cantidad">
+                <ion-button
+                  fill="outline"
+                  size="small"
+                  [disabled]="item.quantity <= 1 || busyProductIds.has(item.product.id)"
+                  (click)="changeQuantity(item, -1)"
+                  aria-label="Disminuir cantidad"
+                  >−</ion-button
+                >
+                <strong aria-live="polite">{{ item.quantity }}</strong>
+                <ion-button
+                  fill="outline"
+                  size="small"
+                  [disabled]="item.quantity >= item.product.stock || busyProductIds.has(item.product.id)"
+                  (click)="changeQuantity(item, 1)"
+                  aria-label="Aumentar cantidad"
+                  >+</ion-button
+                >
+                <span class="stock-hint">Máximo: {{ item.product.stock }}</span>
+              </div>
+              <p class="item-subtotal">
+                Subtotal: {{ subtotal(item) | currency:'COP':'symbol':'1.0-0' }}
+              </p>
+              <ion-button
+                fill="clear"
+                color="danger"
+                (click)="removeItem(item)"
+                [disabled]="busyProductIds.has(item.product.id)"
+                >Eliminar</ion-button
+              >
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+        <aside class="summary-card" aria-label="Resumen del carrito">
+          <h2>Resumen</h2>
+          <div class="summary-line">
+            <span>Productos</span><strong>{{ cart.items.length }}</strong>
+          </div>
+          <div class="summary-line total-line">
+            <span>Total</span
+            ><strong>{{ total | currency:'COP':'symbol':'1.0-0' }}</strong>
+          </div>
+          <ion-button
+            expand="block"
+            (click)="goToCheckout()"
+            >Continuar al checkout</ion-button
+          >
+          <ion-button
+            expand="block"
+            fill="outline"
+            (click)="clearCart()"
+            [disabled]="clearing"
+            >{{ clearing ? 'Vaciando...' : 'Vaciar carrito' }}</ion-button
+          >
+        </aside>
+      </section>
+    </ng-container>
+
+    <ng-template #emptyCart>
+      <section class="cart-state empty-state" role="status">
+        <h2>Tu carrito está vacío</h2>
+        <p>Agrega productos desde el catálogo para verlos aquí.</p>
+        <ion-button (click)="goToCatalog()">Explorar productos</ion-button>
+      </section>
+    </ng-template>
+  </main>
+</ion-content>

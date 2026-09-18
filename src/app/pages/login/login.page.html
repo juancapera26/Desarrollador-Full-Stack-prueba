@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true">
+  <main class="register-shell">
+    <section class="register-card" aria-labelledby="login-title">
+      <div class="brand-mark" aria-hidden="true">C</div>
+      <p class="eyebrow">COMERCIO</p>
+      <h1 id="login-title">Inicia sesión</h1>
+      <p class="intro">
+        Ingresa tus credenciales para continuar con tu compra.
+      </p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+        <ion-item lines="none" [class.invalid]="hasError('email')">
+          <ion-input
+            label="Correo electrónico"
+            labelPlacement="stacked"
+            formControlName="email"
+            type="email"
+            autocomplete="email"
+            placeholder="tu@correo.com"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('email')"
+          >Ingresa un correo válido.</ion-note
+        >
+
+        <ion-item lines="none" [class.invalid]="hasError('password')">
+          <ion-input
+            label="Contraseña"
+            labelPlacement="stacked"
+            formControlName="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Tu contraseña"
+          />
+        </ion-item>
+        <ion-note color="danger" *ngIf="hasError('password')"
+          >Ingresa tu contraseña.</ion-note
+        >
+
+        <ion-text color="danger" *ngIf="errorMessage"
+          ><p class="form-message" role="alert">{{ errorMessage }}</p></ion-text
+        >
+
+        <ion-button expand="block" type="submit" [disabled]="submitting">{{ submitting ? 'Ingresando...' : 'Ingresar' }}</ion-button>
+      </form>
+
+      <p class="login-hint">
+        ¿No tienes cuenta?
+        <a routerLink="/register">Regístrate</a>.
+      </p>
+    </section>
+  </main>
+</ion-content>

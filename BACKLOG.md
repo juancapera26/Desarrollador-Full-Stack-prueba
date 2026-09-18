@@ -8,11 +8,11 @@ Prioridad: P0 = imprescindible para el flujo de compra, P1 = imprescindible para
 |---|---|---:|---:|---|---|
 | HU01 | Registro de usuario | P0 | 3 | — | Pendiente |
 | HU02 | Inicio y cierre de sesión | P0 | 3 | HU01 | Pendiente |
-| HU03 | Catálogo de tres productos | P0 | 3 | HU02 | Pendiente |
-| HU04 | Agregar productos al carrito | P0 | 3 | HU03 | Pendiente |
-| HU05 | Gestionar carrito | P0 | 5 | HU04 | Pendiente |
-| HU06 | Proteger checkout con autenticación | P0 | 3 | HU02, HU05 | Pendiente |
-| HU07 | Crear pedido y confirmar compra | P0 | 5 | HU06 | Pendiente |
+| HU03 | Catálogo de tres productos | P0 | 3 | HU02 | Completada |
+| HU04 | Agregar productos al carrito | P0 | 3 | HU03 | Completada |
+| HU05 | Gestionar carrito | P0 | 5 | HU04 | Completada |
+| HU06 | Proteger checkout con autenticación | P0 | 3 | HU02, HU05 | Completada |
+| HU07 | Crear pedido y confirmar compra | P0 | 5 | HU06 | Completada |
 | HU08 | Persistir usuarios, sesión, carrito y pedidos | P0 | 3 | HU01, HU04, HU07 | Pendiente |
 | HU09 | Calcular puntos por ventas en pesos | P1 | 3 | HU07, HU08 | Pendiente |
 | HU10 | Calcular puntos por volumen | P1 | 3 | HU07, HU08 | Pendiente |

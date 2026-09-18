@@ -1,0 +1,22 @@
+:host { display: block; }
+.checkout-shell { min-height: 100%; padding: 28px 20px 44px; background: #f5f7fb; }
+.checkout-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; width: min(100%, 900px); margin: 0 auto 28px; }
+.eyebrow { margin: 0 0 8px; color: #3157d5; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
+h1 { margin: 0; color: #172033; font-size: clamp(28px, 7vw, 42px); letter-spacing: -.04em; }
+.intro { margin: 8px 0 0; color: #667085; line-height: 1.5; }
+.checkout-header ion-button { --border-radius: 12px; }
+.summary-card, .checkout-state { width: min(100%, 700px); margin: 0 auto; }
+.summary-card { padding: 24px; border: 1px solid #e5e9f2; border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(31, 42, 68, .08); }
+.summary-line { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; color: #667085; border-bottom: 1px solid #edf0f5; }
+.summary-line strong { color: #172033; }
+.total-line { margin-top: 6px; border-bottom: 0; color: #172033; font-size: 22px; }
+.next-step { margin: 16px 0 0; color: #667085; line-height: 1.5; }
+.checkout-state { margin-top: 56px; color: #667085; text-align: center; line-height: 1.5; }
+.error-state, .empty-state { padding: 24px; border: 1px solid #e5e9f2; border-radius: 16px; background: #fff; }
+.confirmation-state { padding: 32px 24px; border: 1px solid #bfe7ca; border-radius: 18px; background: #f1fbf3; color: #176b35; }
+.confirmation-state h2 { margin: 0 0 12px; color: #176b35; }
+.empty-state h2 { margin: 0; color: #172033; }
+@media (max-width: 760px) {
+  .checkout-header { align-items: start; flex-direction: column; }
+  .checkout-header ion-button { width: 100%; }
+}

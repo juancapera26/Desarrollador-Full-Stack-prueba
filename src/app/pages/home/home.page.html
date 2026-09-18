@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true">
+  <main class="catalog-shell">
+    <header class="catalog-header">
+      <div>
+        <p class="eyebrow">COMERCIO</p>
+        <h1 *ngIf="currentUser as user; else guestTitle">Hola, {{ user.name }}</h1>
+        <ng-template #guestTitle><h1>Explora nuestro catálogo</h1></ng-template>
+        <p class="intro">
+          {{ currentUser ? 'Explora nuestros productos disponibles.' : 'Consulta nuestros productos y crea una cuenta para comprar.' }}
+        </p>
+      </div>
+      <div class="header-actions">
+        <ng-container *ngIf="currentUser; else guestActions">
+          <ion-button fill="clear" class="cart-counter" aria-label="Abrir carrito" (click)="goToCart()">Carrito: {{ cartItemCount }}</ion-button>
+          <ion-button fill="outline" (click)="logout()">Cerrar sesión</ion-button>
+        </ng-container>
+        <ng-template #guestActions>
+          <ion-button fill="outline" (click)="goToLogin()">Iniciar sesión</ion-button>
+        </ng-template>
+      </div>
+    </header>
+
+    <p *ngIf="loading" class="catalog-state" role="status">Cargando catálogo...</p>
+    <section *ngIf="errorMessage" class="catalog-state error-state" role="alert">
+      <p>{{ errorMessage }}</p>
+      <ion-button size="small" (click)="loadProducts()">Reintentar</ion-button>
+    </section>
+    <p *ngIf="cartMessage" class="cart-message" role="status">{{ cartMessage }}</p>
+
+    <section *ngIf="!loading && !errorMessage" class="product-grid" aria-label="Catálogo de productos">
+      <ion-card *ngFor="let product of products" class="product-card">
+        <div class="product-image-wrapper" [class.image-missing]="brokenImageIds.has(product.id)">
+          <ion-img
+            *ngIf="!brokenImageIds.has(product.id)"
+            [src]="product.image"
+            [alt]="'Imagen de ' + product.name"
+            (ionError)="markImageAsBroken(product.id)"
+          />
+          <span *ngIf="brokenImageIds.has(product.id)" class="image-fallback" role="img" [attr.aria-label]="'Imagen no disponible de ' + product.name">Imagen no disponible</span>
+        </div>
+        <ion-card-header>
+          <ion-card-subtitle>Producto {{ product.id }}</ion-card-subtitle>
+          <ion-card-title>{{ product.name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="product-description">{{ product.description }}</p>
+          <p class="product-price">{{ product.price | currency:'COP':'symbol':'1.0-0' }}</p>
+          <ion-badge *ngIf="product.stock > 0" color="success">{{ product.stock }} disponibles</ion-badge>
+          <ion-badge *ngIf="product.stock === 0" color="medium">Agotado</ion-badge>
+          <p *ngIf="quantityInCart(product.id) > 0" class="in-cart">En carrito: {{ quantityInCart(product.id) }}</p>
+          <ion-button
+            expand="block"
+            [disabled]="product.stock === 0 || (currentUser && quantityInCart(product.id) >= product.stock) || addingProductIds.has(product.id)"
+            (click)="addProduct(product)"
+          >
+            {{ addingProductIds.has(product.id) ? 'Agregando...' : 'Agregar al carrito' }}
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </section>
+
+    <p *ngIf="!loading && !errorMessage && products.length === 0" class="catalog-state" role="status">No hay productos disponibles.</p>
+  </main>
+</ion-content>

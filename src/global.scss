@@ -1,3 +1,14 @@
+/* CSS core de Ionic, requerido para que .ion-page y los componentes
+   se posicionen y comporten correctamente entre distintas rutas.
+   Faltaba en el proyecto original; sin esto, dos páginas apiladas por
+   el router (login/register/home) no se posicionan una sobre otra. */
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+@import '@ionic/angular/css/padding.css';
+
 * { box-sizing: border-box; }
 html, body, app-root, ion-app { width: 100%; height: 100%; }
 app-root { display: block; position: fixed; inset: 0; }

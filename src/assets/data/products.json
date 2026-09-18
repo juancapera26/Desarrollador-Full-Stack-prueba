@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Camiseta urbana",
+    "description": "Camiseta cómoda de algodón para uso diario.",
+    "price": 45000,
+    "stock": 12,
+    "image": "https://picsum.photos/id/1/800/600"
+  },
+  {
+    "id": 2,
+    "name": "Mochila exploradora",
+    "description": "Mochila resistente para acompañarte en tus recorridos.",
+    "price": 120000,
+    "stock": 7,
+    "image": "https://picsum.photos/id/2/800/600"
+  },
+  {
+    "id": 3,
+    "name": "Reloj clásico",
+    "description": "Reloj de diseño sobrio para cualquier ocasión.",
+    "price": 185000,
+    "stock": 0,
+    "image": "https://picsum.photos/id/3/800/600"
+  }
+]
