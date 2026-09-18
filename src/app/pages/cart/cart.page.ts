@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent } from '@ionic/angular/standalone';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonInput } from '@ionic/angular/standalone';
 import { Cart } from '../../models/cart.model';
 import { CartItem } from '../../models/cart-item.model';
 import { SessionUser } from '../../models/session-user.model';
@@ -11,7 +11,7 @@ import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  imports: [CommonModule, IonContent, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle],
+  imports: [CommonModule, IonContent, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonInput],
   templateUrl: './cart.page.html',
   styleUrl: './cart.page.scss',
 })
@@ -79,6 +79,24 @@ export class CartPage implements OnInit {
         this.cart = result.cart;
       } else {
         this.actionMessage = 'La cantidad solicitada no está disponible.';
+      }
+    });
+  }
+
+  async setQuantity(item: CartItem, value: string | number | null | undefined): Promise<void> {
+    const nextQuantity = Number(value);
+    if (!Number.isInteger(nextQuantity) || nextQuantity < 1 || nextQuantity > item.product.stock) {
+      this.actionMessage = `La cantidad debe estar entre 1 y ${item.product.stock}.`;
+      return;
+    }
+
+    if (nextQuantity === item.quantity) return;
+    await this.runItemAction(item.product.id, async () => {
+      const result = await this.cartService.updateQuantity(this.currentUser!.id, item.product.id, nextQuantity);
+      if (result.ok) {
+        this.cart = result.cart;
+      } else {
+        this.actionMessage = `La cantidad debe estar entre 1 y ${item.product.stock}.`;
       }
     });
   }

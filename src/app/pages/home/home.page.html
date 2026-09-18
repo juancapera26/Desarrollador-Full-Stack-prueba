@@ -2,40 +2,38 @@
   <main class="catalog-shell">
     <header class="catalog-header">
       <div>
-        <p class="eyebrow">COMERCIO</p>
+        <p class="eyebrow"><img class="app-logo" src="assets/images/logo.svg" alt="Logo de Comercio" />COMERCIO</p>
         <h1 *ngIf="currentUser as user; else guestTitle">Hola, {{ user.name }}</h1>
-        <ng-template #guestTitle><h1>Explora nuestro catálogo</h1></ng-template>
-        <p class="intro">
-          {{ currentUser ? 'Explora nuestros productos disponibles.' : 'Consulta nuestros productos y crea una cuenta para comprar.' }}
-        </p>
+        <ng-template #guestTitle><h1>Explora nuestro cat&#225;logo</h1></ng-template>
+        <p class="intro">{{ currentUser ? 'Explora nuestros productos disponibles.' : 'Consulta nuestros productos y crea una cuenta para comprar.' }}</p>
       </div>
       <div class="header-actions">
         <ng-container *ngIf="currentUser; else guestActions">
           <ion-button fill="clear" class="cart-counter" aria-label="Abrir carrito" (click)="goToCart()">Carrito: {{ cartItemCount }}</ion-button>
-          <ion-button fill="outline" (click)="logout()">Cerrar sesión</ion-button>
+          <ion-button fill="clear" class="points-link" (click)="goToPoints()">Mis puntos</ion-button>
+          <ion-button fill="outline" (click)="logout()">Cerrar sesi&#243;n</ion-button>
         </ng-container>
         <ng-template #guestActions>
-          <ion-button fill="outline" (click)="goToLogin()">Iniciar sesión</ion-button>
+          <ion-button fill="outline" (click)="goToLogin()">Iniciar sesi&#243;n</ion-button>
         </ng-template>
       </div>
     </header>
 
-    <p *ngIf="loading" class="catalog-state" role="status">Cargando catálogo...</p>
+    <p *ngIf="loading" class="catalog-state" role="status">Cargando cat&#225;logo...</p>
     <section *ngIf="errorMessage" class="catalog-state error-state" role="alert">
       <p>{{ errorMessage }}</p>
       <ion-button size="small" (click)="loadProducts()">Reintentar</ion-button>
     </section>
-    <p *ngIf="cartMessage" class="cart-message" role="status">{{ cartMessage }}</p>
+    <div *ngIf="cartMessage" class="cart-toast" [class.toast-error]="cartMessageType === 'error'" role="status" aria-live="polite">
+      <span class="toast-icon" aria-hidden="true">{{ cartMessageType === 'error' ? '!' : '&#10003;' }}</span>
+      <span class="toast-text">{{ cartMessage }}</span>
+      <button type="button" class="toast-close" aria-label="Cerrar notificaci&#243;n" (click)="clearCartMessage()">&#215;</button>
+    </div>
 
-    <section *ngIf="!loading && !errorMessage" class="product-grid" aria-label="Catálogo de productos">
+    <section *ngIf="!loading && !errorMessage" class="product-grid" aria-label="Cat&#225;logo de productos">
       <ion-card *ngFor="let product of products" class="product-card">
         <div class="product-image-wrapper" [class.image-missing]="brokenImageIds.has(product.id)">
-          <ion-img
-            *ngIf="!brokenImageIds.has(product.id)"
-            [src]="product.image"
-            [alt]="'Imagen de ' + product.name"
-            (ionError)="markImageAsBroken(product.id)"
-          />
+          <ion-img *ngIf="!brokenImageIds.has(product.id)" [src]="product.image" [alt]="'Imagen de ' + product.name" (ionError)="markImageAsBroken(product.id)" />
           <span *ngIf="brokenImageIds.has(product.id)" class="image-fallback" role="img" [attr.aria-label]="'Imagen no disponible de ' + product.name">Imagen no disponible</span>
         </div>
         <ion-card-header>
@@ -48,13 +46,7 @@
           <ion-badge *ngIf="product.stock > 0" color="success">{{ product.stock }} disponibles</ion-badge>
           <ion-badge *ngIf="product.stock === 0" color="medium">Agotado</ion-badge>
           <p *ngIf="quantityInCart(product.id) > 0" class="in-cart">En carrito: {{ quantityInCart(product.id) }}</p>
-          <ion-button
-            expand="block"
-            [disabled]="product.stock === 0 || (currentUser && quantityInCart(product.id) >= product.stock) || addingProductIds.has(product.id)"
-            (click)="addProduct(product)"
-          >
-            {{ addingProductIds.has(product.id) ? 'Agregando...' : 'Agregar al carrito' }}
-          </ion-button>
+          <ion-button expand="block" [disabled]="product.stock === 0 || (currentUser && quantityInCart(product.id) >= product.stock) || addingProductIds.has(product.id)" (click)="addProduct(product)">{{ addingProductIds.has(product.id) ? 'Agregando...' : 'Agregar al carrito' }}</ion-button>
         </ion-card-content>
       </ion-card>
     </section>

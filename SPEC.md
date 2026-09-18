@@ -152,6 +152,6 @@ Debe existir mensaje visible para: campos inválidos, correo duplicado, credenci
 - Consultar antes: cambiar reglas de puntos, añadir backend/dependencias, modificar el alcance o introducir autenticación real.
 - Nunca: inventar reglas de negocio, eliminar pruebas para obtener una compilación verde ni almacenar secretos.
 
-## 11. Pregunta abierta bloqueante
+## 11. Decisión confirmada
 
-Confirmar con negocio que la corrección propuesta para volumen es `0–999 = 0`, `1.000–2.999 = 50`, `3.000–3.999 = 100`, `4.000+ = 150`. La implementación puede avanzar en autenticación, catálogo, carrito y compra mientras se confirma.
+El usuario confirmó que la regla definitiva para volumen es `0–999 = 0`, `1.000–2.999 = 50`, `3.000–3.999 = 100`, `4.000+ = 150`.

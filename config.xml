@@ -5,6 +5,14 @@
   <author email="no-reply@example.test" href="https://example.test">Proyecto Full Stack</author>
   <content src="index.html" />
   <access origin="*" />
+  <platform name="android">
+    <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
+    <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
+    <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
+    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
+    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
+  </platform>
   <preference name="ScrollEnabled" value="false" />
   <preference name="BackupWebStorage" value="none" />
   <allow-intent href="http://*/*" />

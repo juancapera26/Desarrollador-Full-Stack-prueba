@@ -1,22 +1,22 @@
 :host { display: block; }
-.checkout-shell { min-height: 100%; padding: 28px 20px 44px; background: #f5f7fb; }
-.checkout-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; width: min(100%, 900px); margin: 0 auto 28px; }
-.eyebrow { margin: 0 0 8px; color: #3157d5; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
-h1 { margin: 0; color: #172033; font-size: clamp(28px, 7vw, 42px); letter-spacing: -.04em; }
-.intro { margin: 8px 0 0; color: #667085; line-height: 1.5; }
-.checkout-header ion-button { --border-radius: 12px; }
+.checkout-shell { min-height: 100%; padding: 24px 20px 56px; background: var(--app-canvas); }
+.checkout-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: min(100%, 900px); margin: 0 auto 34px; padding: 24px 28px; border: 1px solid var(--app-line); border-radius: var(--app-radius-lg); background: var(--app-surface); box-shadow: var(--app-shadow-sm); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 10px; color: var(--app-primary); font-size: 11px; font-weight: 800; letter-spacing: .17em; }
+.eyebrow::before { width: 22px; height: 2px; border-radius: 99px; background: var(--app-accent); content: ''; }
+h1 { margin: 0; color: var(--app-ink); font-size: clamp(30px, 6vw, 46px); font-weight: 800; letter-spacing: -.055em; line-height: 1.02; }
+.intro { margin: 12px 0 0; color: var(--app-muted); line-height: 1.55; }
+.checkout-header ion-button { --border-radius: 11px; margin: 0; }
 .summary-card, .checkout-state { width: min(100%, 700px); margin: 0 auto; }
-.summary-card { padding: 24px; border: 1px solid #e5e9f2; border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(31, 42, 68, .08); }
-.summary-line { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; color: #667085; border-bottom: 1px solid #edf0f5; }
-.summary-line strong { color: #172033; }
-.total-line { margin-top: 6px; border-bottom: 0; color: #172033; font-size: 22px; }
-.next-step { margin: 16px 0 0; color: #667085; line-height: 1.5; }
-.checkout-state { margin-top: 56px; color: #667085; text-align: center; line-height: 1.5; }
-.error-state, .empty-state { padding: 24px; border: 1px solid #e5e9f2; border-radius: 16px; background: #fff; }
-.confirmation-state { padding: 32px 24px; border: 1px solid #bfe7ca; border-radius: 18px; background: #f1fbf3; color: #176b35; }
-.confirmation-state h2 { margin: 0 0 12px; color: #176b35; }
-.empty-state h2 { margin: 0; color: #172033; }
-@media (max-width: 760px) {
-  .checkout-header { align-items: start; flex-direction: column; }
-  .checkout-header ion-button { width: 100%; }
-}
+.summary-card { padding: 26px; border: 1px solid var(--app-line); border-radius: var(--app-radius-md); background: var(--app-surface); box-shadow: var(--app-shadow-md); }
+.summary-line { display: flex; justify-content: space-between; gap: 16px; padding: 15px 0; color: var(--app-muted); border-bottom: 1px solid #edf0f5; }
+.summary-line strong { color: var(--app-ink); }
+.total-line { margin-top: 6px; border-bottom: 0; color: var(--app-ink); font-size: 22px; }
+.summary-card ion-button { --border-radius: 11px; margin-top: 10px; height: 50px; font-weight: 750; }
+.next-step { margin: 16px 0 0; color: var(--app-muted); line-height: 1.5; }
+.checkout-state { margin-top: 64px; color: var(--app-muted); text-align: center; line-height: 1.5; }
+.error-state, .empty-state { padding: 26px; border: 1px solid var(--app-line); border-radius: var(--app-radius-md); background: var(--app-surface); box-shadow: var(--app-shadow-sm); }
+.confirmation-state { padding: 34px 28px; border: 1px solid #bfe7ca; border-radius: var(--app-radius-md); background: #effaf3; color: var(--app-success); box-shadow: var(--app-shadow-sm); }
+.confirmation-state h2 { margin: 0 0 12px; color: var(--app-success); font-size: 28px; }
+.empty-state h2 { margin: 0 0 10px; color: var(--app-ink); }
+@media (max-width: 760px) { .checkout-shell { padding: 14px 14px 40px; } .checkout-header { align-items: start; flex-direction: column; gap: 18px; margin-bottom: 24px; padding: 20px; } .checkout-header ion-button { width: 100%; } .summary-card { padding: 20px; } .summary-line { gap: 10px; font-size: 14px; } }
+

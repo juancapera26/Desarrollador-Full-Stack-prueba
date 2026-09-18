@@ -1,17 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  IonBadge,
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonContent,
-  IonImg,
-} from '@ionic/angular/standalone';
+import { IonBadge, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonImg } from '@ionic/angular/standalone';
 import { Product } from '../../models/product.model';
 import { Cart } from '../../models/cart.model';
 import { SessionUser } from '../../models/session-user.model';
@@ -40,6 +30,8 @@ export class HomePage implements OnInit {
   readonly addingProductIds = new Set<number>();
   cart: Cart | null = null;
   cartMessage = '';
+  cartMessageType: 'success' | 'error' = 'success';
+  private cartMessageTimer: ReturnType<typeof setTimeout> | undefined;
 
   ngOnInit(): void {
     this.loadProducts();
@@ -67,7 +59,7 @@ export class HomePage implements OnInit {
       error: () => {
         this.products = [];
         this.loading = false;
-        this.errorMessage = 'No pudimos cargar el catálogo. Intenta nuevamente.';
+        this.errorMessage = 'No pudimos cargar el catalogo. Intenta nuevamente.';
       },
     });
   }
@@ -83,7 +75,7 @@ export class HomePage implements OnInit {
       this.cart = await this.cartService.getCart(this.currentUser.id);
     } catch {
       this.cart = { userId: this.currentUser.id, items: [] };
-      this.cartMessage = 'No pudimos cargar tu carrito. Intenta nuevamente.';
+      this.showCartMessage('No pudimos cargar tu carrito. Intenta nuevamente.', 'error');
     }
   }
 
@@ -108,18 +100,21 @@ export class HomePage implements OnInit {
 
     this.currentUser = activeUser;
     this.addingProductIds.add(product.id);
-    this.cartMessage = '';
+    this.clearCartMessage();
     try {
       const result = await this.cartService.addToCart(activeUser.id, product);
       if (!result.ok) {
-        this.cartMessage = result.reason === 'out-of-stock'
-          ? `${product.name} no tiene más unidades disponibles.`
-          : 'No pudimos agregar el producto. Intenta nuevamente.';
+        this.showCartMessage(
+          result.reason === 'out-of-stock'
+            ? product.name + ' no tiene mas unidades disponibles.'
+            : 'No pudimos agregar el producto. Intenta nuevamente.',
+          'error',
+        );
         return;
       }
 
       this.cart = result.cart;
-      this.cartMessage = `${product.name} fue agregado al carrito.`;
+      this.showCartMessage(product.name + ' fue agregado al carrito.');
     } finally {
       this.addingProductIds.delete(product.id);
     }
@@ -141,7 +136,28 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/cart');
   }
 
+  goToPoints(): void {
+    this.router.navigateByUrl('/points');
+  }
+
   goToLogin(): void {
     this.router.navigate(['/login'], { queryParams: { returnUrl: '/home' } });
   }
+
+  private showCartMessage(message: string, type: 'success' | 'error' = 'success'): void {
+    if (this.cartMessageTimer) clearTimeout(this.cartMessageTimer);
+    this.cartMessage = message;
+    this.cartMessageType = type;
+    this.cartMessageTimer = setTimeout(() => {
+      this.cartMessage = '';
+      this.cartMessageTimer = undefined;
+    }, 3200);
+  }
+
+  clearCartMessage(): void {
+    if (this.cartMessageTimer) clearTimeout(this.cartMessageTimer);
+    this.cartMessage = '';
+    this.cartMessageTimer = undefined;
+  }
 }
+

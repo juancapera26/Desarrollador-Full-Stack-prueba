@@ -13,10 +13,10 @@ Prioridad: P0 = imprescindible para el flujo de compra, P1 = imprescindible para
 | HU05 | Gestionar carrito | P0 | 5 | HU04 | Completada |
 | HU06 | Proteger checkout con autenticación | P0 | 3 | HU02, HU05 | Completada |
 | HU07 | Crear pedido y confirmar compra | P0 | 5 | HU06 | Completada |
-| HU08 | Persistir usuarios, sesión, carrito y pedidos | P0 | 3 | HU01, HU04, HU07 | Pendiente |
-| HU09 | Calcular puntos por ventas en pesos | P1 | 3 | HU07, HU08 | Pendiente |
-| HU10 | Calcular puntos por volumen | P1 | 3 | HU07, HU08 | Pendiente |
-| HU11 | Mostrar resumen de puntos | P1 | 3 | HU09, HU10 | Pendiente |
+| HU08 | Persistir usuarios, sesión, carrito y pedidos | P0 | 3 | HU01, HU04, HU07 | Completada |
+| HU09 | Calcular puntos por ventas en pesos | P1 | 3 | HU07, HU08 | Completada |
+| HU10 | Calcular puntos por volumen | P1 | 3 | HU07, HU08 | Completada |
+| HU11 | Mostrar resumen de puntos | P1 | 3 | HU09, HU10 | Completada |
 | HU12 | Preparar entrega, README y APK | P2 | 5 | HU01–HU11 | Pendiente |
 
 ## Historias y criterios de aceptación

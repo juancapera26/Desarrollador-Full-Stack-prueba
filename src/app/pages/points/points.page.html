@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <main class="points-shell">
+    <header class="points-header">
+      <div>
+        <p class="eyebrow"><img class="app-logo" src="assets/images/logo.svg" alt="Logo de Comercio" />RECOMPENSAS</p>
+        <h1>Mis puntos</h1>
+        <p class="intro">Resumen de tus compras confirmadas.</p>
+      </div>
+      <ion-button fill="outline" (click)="goToCatalog()">Volver al cat&#225;logo</ion-button>
+    </header>
+
+    <p *ngIf="loading" class="points-state" role="status">Cargando tus puntos...</p>
+    <section *ngIf="errorMessage" class="points-state error-state" role="alert">
+      <p>{{ errorMessage }}</p>
+      <ion-button size="small" (click)="loadSummary()">Reintentar</ion-button>
+    </section>
+
+    <ng-container *ngIf="!loading && !errorMessage && summary as points">
+      <section class="total-card" aria-label="Total de puntos">
+        <p class="card-label">TOTAL DE PUNTOS</p>
+        <strong>{{ points.totalPoints }}</strong>
+        <p>{{ points.orderCount }} pedido{{ points.orderCount === 1 ? '' : 's' }} confirmado{{ points.orderCount === 1 ? '' : 's' }}</p>
+      </section>
+      <section class="summary-grid" aria-label="Desglose de puntos">
+        <ion-card>
+          <ion-card-header><ion-card-title>Por ventas</ion-card-title></ion-card-header>
+          <ion-card-content>
+            <strong>{{ points.salesPoints }} puntos</strong>
+            <p>Ventas acumuladas: {{ points.totalSales | currency:'COP':'symbol':'1.0-0' }}</p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header><ion-card-title>Por volumen</ion-card-title></ion-card-header>
+          <ion-card-content>
+            <strong>{{ points.volumePoints }} puntos</strong>
+            <p>Unidades vendidas: {{ points.totalUnits }}</p>
+          </ion-card-content>
+        </ion-card>
+      </section>
+      <p *ngIf="points.orderCount === 0" class="empty-state" role="status">A&#250;n no tienes ventas. Tus puntos aparecer&#225;n despu&#233;s de confirmar un pedido.</p>
+    </ng-container>
+  </main>
+</ion-content>

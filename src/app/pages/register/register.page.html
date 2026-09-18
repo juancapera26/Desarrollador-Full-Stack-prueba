@@ -1,85 +1,38 @@
 <ion-content [fullscreen]="true">
   <main class="register-shell">
     <section class="register-card" aria-labelledby="register-title">
-      <div class="brand-mark" aria-hidden="true">C</div>
+      <img class="brand-logo" src="assets/images/logo.svg" alt="Logo de Comercio" />
       <p class="eyebrow">COMERCIO</p>
       <h1 id="register-title">Crea tu cuenta</h1>
-      <p class="intro">
-        Regístrate para explorar nuestro catálogo y preparar tus compras.
-      </p>
+      <p class="intro">Reg&#237;strate para explorar nuestro cat&#225;logo y preparar tus compras.</p>
 
       <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
         <ion-item lines="none" [class.invalid]="hasError('name')">
-          <ion-input
-            label="Nombre completo"
-            labelPlacement="stacked"
-            formControlName="name"
-            type="text"
-            autocomplete="name"
-            placeholder="Ej. María Pérez"
-          />
+          <ion-input label="Nombre completo" labelPlacement="stacked" formControlName="name" type="text" autocomplete="name" placeholder="Ej. Mar&#237;a P&#233;rez" />
         </ion-item>
-        <ion-note color="danger" *ngIf="hasError('name')"
-          >Ingresa tu nombre (mínimo 2 caracteres).</ion-note
-        >
+        <ion-note color="danger" *ngIf="hasError('name')">Ingresa tu nombre (m&#237;nimo 2 caracteres).</ion-note>
 
         <ion-item lines="none" [class.invalid]="hasError('email')">
-          <ion-input
-            label="Correo electrónico"
-            labelPlacement="stacked"
-            formControlName="email"
-            type="email"
-            autocomplete="email"
-            placeholder="tu@correo.com"
-          />
+          <ion-input label="Correo electr&#243;nico" labelPlacement="stacked" formControlName="email" type="email" autocomplete="email" placeholder="tu@correo.com" />
         </ion-item>
-        <ion-note color="danger" *ngIf="hasError('email')"
-          >Ingresa un correo válido.</ion-note
-        >
+        <ion-note color="danger" *ngIf="hasError('email')">Ingresa un correo v&#225;lido.</ion-note>
 
         <ion-item lines="none" [class.invalid]="hasError('password')">
-          <ion-input
-            label="Contraseña"
-            labelPlacement="stacked"
-            formControlName="password"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Mínimo 6 caracteres"
-          />
+          <ion-input label="Contrase&#241;a" labelPlacement="stacked" formControlName="password" type="password" autocomplete="new-password" placeholder="M&#237;nimo 6 caracteres" />
         </ion-item>
-        <ion-note color="danger" *ngIf="hasError('password')"
-          >La contraseña debe tener al menos 6 caracteres.</ion-note
-        >
+        <ion-note color="danger" *ngIf="hasError('password')">La contrase&#241;a debe tener al menos 6 caracteres.</ion-note>
 
         <ion-item lines="none" [class.invalid]="hasError('confirmPassword')">
-          <ion-input
-            label="Confirmar contraseña"
-            labelPlacement="stacked"
-            formControlName="confirmPassword"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Repite tu contraseña"
-          />
+          <ion-input label="Confirmar contrase&#241;a" labelPlacement="stacked" formControlName="confirmPassword" type="password" autocomplete="new-password" placeholder="Repite tu contrase&#241;a" />
         </ion-item>
-        <ion-note color="danger" *ngIf="hasError('confirmPassword')"
-          >Las contraseñas deben coincidir.</ion-note
-        >
+        <ion-note color="danger" *ngIf="hasError('confirmPassword')">Las contrase&#241;as deben coincidir.</ion-note>
 
-        <ion-text color="danger" *ngIf="errorMessage"
-          ><p class="form-message" role="alert">{{ errorMessage }}</p></ion-text
-        >
-        <ion-text color="success" *ngIf="successMessage"
-          ><p class="form-message" role="status">
-            {{ successMessage }}
-          </p></ion-text
-        >
+        <ion-text color="danger" *ngIf="errorMessage"><p class="form-message" role="alert">{{ errorMessage }}</p></ion-text>
+        <ion-text color="success" *ngIf="successMessage"><p class="form-message" role="status">{{ successMessage }}</p></ion-text>
         <ion-button expand="block" type="submit" [disabled]="submitting">{{ submitting ? 'Creando cuenta...' : 'Crear cuenta' }}</ion-button>
       </form>
 
-      <p class="login-hint">
-        ¿Ya tienes una cuenta?
-        <a routerLink="/login">Inicia sesión</a>.
-      </p>
+      <p class="login-hint">&#191;Ya tienes una cuenta? <a routerLink="/login">Inicia sesi&#243;n</a>.</p>
     </section>
   </main>
 </ion-content>

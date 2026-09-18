@@ -1,6 +1,25 @@
 :root {
-  --ion-color-primary: #3157d5;
-  --ion-color-success: #198754;
-  --ion-font-family:
-    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --app-canvas: #f5f7f4;
+  --app-surface: #ffffff;
+  --app-ink: #162033;
+  --app-muted: #667085;
+  --app-subtle: #8b95a7;
+  --app-line: #e5e9f0;
+  --app-primary: #1f4ed8;
+  --app-primary-dark: #173aa9;
+  --app-accent: #e9a83b;
+  --app-success: #19704a;
+  --app-danger: #b42318;
+  --app-font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --app-radius-sm: 10px;
+  --app-radius-md: 16px;
+  --app-radius-lg: 24px;
+  --app-shadow-sm: 0 8px 24px rgba(22, 32, 51, .06);
+  --app-shadow-md: 0 18px 44px rgba(22, 32, 51, .10);
+
+  --ion-color-primary: var(--app-primary);
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-success: var(--app-success);
+  --ion-color-danger: var(--app-danger);
+  --ion-font-family: var(--app-font-family);
 }

@@ -2,7 +2,7 @@
   <main class="checkout-shell">
     <header class="checkout-header">
       <div>
-        <p class="eyebrow">COMPRA SEGURA</p>
+        <p class="eyebrow"><img class="app-logo" src="assets/images/logo.svg" alt="Logo de Comercio" />COMPRA SEGURA</p>
         <h1>Checkout</h1>
         <p class="intro">Revisa tu carrito antes de confirmar.</p>
       </div>
@@ -10,7 +10,6 @@
     </header>
 
     <p *ngIf="loading" class="checkout-state" role="status">Cargando resumen...</p>
-
     <section *ngIf="errorMessage" class="checkout-state error-state" role="alert">
       <p>{{ errorMessage }}</p>
       <ion-button size="small" (click)="loadCart()">Reintentar</ion-button>
@@ -19,7 +18,7 @@
     <section *ngIf="confirmedOrder" class="checkout-state confirmation-state" role="status">
       <h2>Pedido confirmado</h2>
       <p>{{ confirmationMessage }}</p>
-      <p>Número de pedido: <strong>{{ confirmedOrder.id }}</strong></p>
+      <p>N&#250;mero de pedido: <strong>{{ confirmedOrder.id }}</strong></p>
       <p>Total: <strong>{{ confirmedOrder.total | currency:'COP':'symbol':'1.0-0' }}</strong></p>
       <ion-button (click)="goToCart()">Volver al carrito</ion-button>
     </section>
@@ -27,22 +26,17 @@
     <ng-container *ngIf="!loading && !errorMessage && cart && !confirmedOrder">
       <section *ngIf="cart.items.length; else emptyCart" class="summary-card" aria-label="Resumen de checkout">
         <div class="summary-line" *ngFor="let item of cart.items">
-          <span>{{ item.product.name }} × {{ item.quantity }}</span>
+          <span>{{ item.product.name }} &#215; {{ item.quantity }}</span>
           <strong>{{ item.product.price * item.quantity | currency:'COP':'symbol':'1.0-0' }}</strong>
         </div>
-        <div class="summary-line total-line">
-          <span>Total</span>
-          <strong>{{ total | currency:'COP':'symbol':'1.0-0' }}</strong>
-        </div>
-        <ion-button expand="block" (click)="confirmOrder()" [disabled]="submitting">
-          {{ submitting ? 'Confirmando...' : 'Confirmar pedido' }}
-        </ion-button>
+        <div class="summary-line total-line"><span>Total</span><strong>{{ total | currency:'COP':'symbol':'1.0-0' }}</strong></div>
+        <ion-button expand="block" (click)="confirmOrder()" [disabled]="submitting">{{ submitting ? 'Confirmando...' : 'Confirmar pedido' }}</ion-button>
       </section>
     </ng-container>
 
     <ng-template #emptyCart>
       <section class="checkout-state empty-state" role="status">
-        <h2>Tu carrito está vacío</h2>
+        <h2>Tu carrito est&#225; vac&#237;o</h2>
         <p>Agrega productos antes de continuar con la compra.</p>
         <ion-button (click)="goToCart()">Volver al carrito</ion-button>
       </section>

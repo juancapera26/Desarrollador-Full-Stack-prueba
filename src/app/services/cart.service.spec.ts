@@ -60,6 +60,10 @@ describe('CartService', () => {
     await expectAsync(service.getCart('user-1')).toBeResolvedTo({ userId: 'user-1', items: [{ product, quantity: 2 }] });
   });
 
+  it('returns an empty controlled cart when the persisted cart cannot be read', async () => {
+    await expectAsync(service.getCart('')).toBeResolvedTo({ userId: '', items: [] });
+  });
+
   it('updates quantity, calculates the total, removes an item and clears the cart', async () => {
     await service.addToCart('user-1', product);
     await service.addToCart('user-1', { ...product, id: 2, name: 'Mochila', price: 120000, stock: 7 });

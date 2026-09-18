@@ -15,5 +15,19 @@ app-root { display: block; position: fixed; inset: 0; }
 ion-app { display: block; position: absolute; inset: 0; }
 ion-router-outlet { display: block; width: 100%; height: 100%; }
 ion-content { display: block; width: 100%; height: 100vh !important; min-height: 100vh !important; }
-html, body { margin: 0; min-height: 100%; background: #f5f7fb; }
-body { color: #172033; }
+html, body { margin: 0; min-height: 100%; background: var(--app-canvas); }
+body { color: var(--app-ink); font-family: var(--app-font-family); }
+
+.app-logo { width: 28px; height: 28px; flex: 0 0 auto; border-radius: 8px; object-fit: contain; }
+.brand-logo { display: block; width: 64px; height: 64px; margin: 0 auto 8px; border-radius: 18px; box-shadow: 0 8px 18px rgba(31, 78, 216, .18); }
+
+ion-content { --background: var(--app-canvas); }
+ion-button { --border-radius: 12px; --box-shadow: none; text-transform: none; font-weight: 700; letter-spacing: .01em; }
+ion-button::part(native) { transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
+ion-button:not([disabled]):hover::part(native) { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(24, 58, 144, .14); }
+ion-button[fill="outline"] { --border-width: 1.5px; }
+ion-card { --background: var(--app-surface); --color: var(--app-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

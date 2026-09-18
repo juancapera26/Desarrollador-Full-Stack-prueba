@@ -18,11 +18,15 @@ export class CartService {
   private readonly cartsCollection = 'carts';
 
   async getCart(userId: string): Promise<Cart> {
-    const snapshot = await getDoc(doc(db, this.cartsCollection, userId));
-    if (!snapshot.exists()) return { userId, items: [] };
+    try {
+      const snapshot = await getDoc(doc(db, this.cartsCollection, userId));
+      if (!snapshot.exists()) return { userId, items: [] };
 
-    const data = snapshot.data() as Partial<Cart>;
-    return { userId, items: Array.isArray(data.items) ? (data.items as CartItem[]) : [] };
+      const data = snapshot.data() as Partial<Cart>;
+      return { userId, items: Array.isArray(data.items) ? (data.items as CartItem[]) : [] };
+    } catch {
+      return { userId, items: [] };
+    }
   }
 
   async addToCart(userId: string, product: Product): Promise<AddToCartResult> {
