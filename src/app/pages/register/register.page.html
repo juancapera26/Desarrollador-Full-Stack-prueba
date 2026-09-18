@@ -73,7 +73,7 @@
             {{ successMessage }}
           </p></ion-text
         >
-        <ion-button expand="block" type="submit">Crear cuenta</ion-button>
+        <ion-button expand="block" type="submit" [disabled]="submitting">{{ submitting ? 'Creando cuenta...' : 'Crear cuenta' }}</ion-button>
       </form>
 
       <p class="login-hint">

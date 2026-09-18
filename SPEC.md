@@ -21,16 +21,21 @@ La especificación toma como fuente normativa la prueba técnica original. El pl
 
 ### Fuera de alcance
 
-- Backend obligatorio, base de datos remota, pagos reales y autenticación avanzada.
-- Seguridad de producción para contraseñas; LocalStorage es aceptable para la prueba, pero no para producción.
+- Pagos reales y autenticación avanzada (OAuth, MFA, etc.).
+- Seguridad de producción para contraseñas: se guardan en texto plano en Firestore; aceptable solo para esta prueba, no para producción.
 - Microservicios, Docker, Kubernetes, NgRx u otra complejidad no necesaria.
+- Reglas de seguridad de Firestore restrictivas: el usuario autorizó explícitamente usar Firestore en modo de prueba (reglas abiertas `allow read, write: if true`) porque la app no usa Firebase Authentication.
+
+**Cambio de alcance autorizado por el usuario (2026-09-17):** la prueba original excluía "backend obligatorio, base de datos remota". El usuario pidió explícitamente conectar la app a un proyecto Firebase existente y usar **Firestore como backend real** en lugar de LocalStorage. Este cambio se documenta aquí y se propaga a la sección 3, 4 y 6.
 
 ## 3. Stack y comandos previstos
 
 - Ionic + Angular + TypeScript + SCSS.
 - Cordova para empaquetado Android.
-- LocalStorage para usuarios, sesión, carrito y pedidos.
+- **Firestore** (proyecto Firebase `catalogo-productos-77ab0`) para usuarios, carrito y pedidos. Config del SDK web en `src/app/firebase.config.ts`.
+- LocalStorage se mantiene solo para el flag de sesión activa en el dispositivo (`currentUser`), ya que es estado local del dispositivo, no un dato compartido.
 - JSON local/mock para productos.
+- Emulador de Firestore (`firebase-tools`, requiere JDK 21+) para pruebas unitarias, de forma que `npm test` no toque la base de datos real. Ver sección 8.
 
 Comandos, sujetos a la versión real del proyecto:
 
@@ -54,11 +59,12 @@ src/app/
 ├── services/{auth,product,cart,order,points}.service.ts
 ├── models/{user,product,cart-item,order,points}.model.ts
 ├── guards/auth.guard.ts
+├── firebase.config.ts
 └── app.routes.ts
 src/assets/data/products.json
 ```
 
-Claves de persistencia: `users`, `currentUser`, `cart`, `orders`.
+Colecciones de Firestore: `users`, `carts`, `orders` (por confirmar nombre exacto en HU04/HU07). Clave de LocalStorage que se conserva: `currentUser` (id del usuario con sesión activa en este dispositivo).
 
 ## 5. Contratos principales
 
@@ -76,6 +82,8 @@ Servicios mínimos:
 - `CartService`: `addToCart`, `removeFromCart`, `updateQuantity`, `getCart`, `clearCart`, `getTotal`.
 - `OrderService`: `createOrder`, `getOrdersByUser`.
 - `PointsService`: `calculateSalesPoints`, `calculateVolumePoints`, `getSummary`.
+
+Nota (tras el cambio a Firestore): los métodos que leen/escriben datos compartidos (`register`, `login`, operaciones de carrito/pedidos) son ahora asíncronos (`Promise`/`async`), porque Firestore es una API de red. `isAuthenticated`/`getCurrentUser` pueden seguir siendo síncronos si solo leen el flag local `currentUser`.
 
 ## 6. Reglas de negocio corregidas
 
@@ -122,6 +130,7 @@ Debe existir mensaje visible para: campos inválidos, correo duplicado, credenci
 ## 8. Estrategia de pruebas
 
 - Unitarias: validaciones, autenticación, carrito, totales, persistencia y límites de puntos.
+- Las pruebas que tocan Firestore corren contra el **emulador de Firestore** (`firebase-tools`), nunca contra la base de datos real. `npm test` arranca y detiene el emulador automáticamente (`firebase emulators:exec --only firestore ...`). Requiere JDK 21+ instalado (el emulador de Firestore no soporta versiones anteriores).
 - Integración: registro → login → catálogo → carrito → checkout → pedido → resumen.
 - Manual móvil: flujo completo, recarga, cierre/reapertura, navegación y recursos.
 - Límites de puntos: 0, 9/10/29/30/49/50/79/80%, 999/1000/2999/3000/3999/4000 unidades.

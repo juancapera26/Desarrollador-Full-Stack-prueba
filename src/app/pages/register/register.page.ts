@@ -23,15 +23,16 @@ export class RegisterPage {
   });
 
   submitted = false;
+  submitting = false;
   successMessage = '';
   errorMessage = '';
 
-  submit(): void {
+  async submit(): Promise<void> {
     this.submitted = true;
     this.successMessage = '';
     this.errorMessage = '';
 
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid || this.submitting) return;
 
     const value = this.registerForm.getRawValue();
     if (value.password !== value.confirmPassword) {
@@ -40,15 +41,23 @@ export class RegisterPage {
       return;
     }
 
-    const result = this.authService.register({ name: value.name.trim(), email: value.email, password: value.password });
-    if (!result.ok) {
-      this.errorMessage = 'Ya existe un usuario registrado con ese correo.';
-      return;
-    }
+    this.submitting = true;
+    try {
+      const result = await this.authService.register({ name: value.name.trim(), email: value.email, password: value.password });
+      if (!result.ok) {
+        this.errorMessage =
+          result.reason === 'duplicate-email'
+            ? 'Ya existe un usuario registrado con ese correo.'
+            : 'No se pudo completar el registro. Intenta nuevamente.';
+        return;
+      }
 
-    this.successMessage = 'Registro exitoso. Tu cuenta fue creada correctamente.';
-    this.registerForm.reset();
-    this.submitted = false;
+      this.successMessage = 'Registro exitoso. Tu cuenta fue creada correctamente.';
+      this.registerForm.reset();
+      this.submitted = false;
+    } finally {
+      this.submitting = false;
+    }
   }
 
   hasError(controlName: 'name' | 'email' | 'password' | 'confirmPassword'): boolean {

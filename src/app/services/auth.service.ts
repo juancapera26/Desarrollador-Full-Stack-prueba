@@ -1,39 +1,33 @@
 import { Injectable } from '@angular/core';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { db } from '../firebase.config';
 import { User } from '../models/user.model';
 
 export type RegistrationResult =
   | { ok: true; user: User }
-  | { ok: false; reason: 'duplicate-email' };
+  | { ok: false; reason: 'duplicate-email' }
+  | { ok: false; reason: 'unknown-error' };
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly usersKey = 'users';
+  private readonly usersCollection = collection(db, 'users');
 
-  register(input: Omit<User, 'id'>): RegistrationResult {
-    const users = this.readUsers();
+  async register(input: Omit<User, 'id'>): Promise<RegistrationResult> {
     const normalizedEmail = input.email.trim().toLowerCase();
 
-    if (users.some((user) => user.email.toLowerCase() === normalizedEmail)) {
-      return { ok: false, reason: 'duplicate-email' };
-    }
-
-    const user: User = { ...input, email: normalizedEmail, id: crypto.randomUUID() };
-    this.writeUsers([...users, user]);
-    return { ok: true, user };
-  }
-
-  private readUsers(): User[] {
     try {
-      const stored = localStorage.getItem(this.usersKey);
-      if (!stored) return [];
-      const parsed: unknown = JSON.parse(stored);
-      return Array.isArray(parsed) ? (parsed as User[]) : [];
-    } catch {
-      return [];
-    }
-  }
+      const duplicateQuery = query(this.usersCollection, where('email', '==', normalizedEmail));
+      const duplicateSnapshot = await getDocs(duplicateQuery);
+      if (!duplicateSnapshot.empty) {
+        return { ok: false, reason: 'duplicate-email' };
+      }
 
-  private writeUsers(users: User[]): void {
-    localStorage.setItem(this.usersKey, JSON.stringify(users));
+      const id = crypto.randomUUID();
+      const user: User = { ...input, email: normalizedEmail, id };
+      await setDoc(doc(this.usersCollection, id), user);
+      return { ok: true, user };
+    } catch {
+      return { ok: false, reason: 'unknown-error' };
+    }
   }
 }
