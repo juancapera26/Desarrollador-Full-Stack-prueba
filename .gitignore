@@ -18,3 +18,4 @@ step*.js
 # Salidas generadas por Angular/Cordova
 /www/
 /platforms/
+/plugins/

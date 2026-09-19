@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "907993303542",
+    "project_id": "catalogo-productos-77ab0",
+    "storage_bucket": "catalogo-productos-77ab0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907993303542:android:4716c543d6b28d9f7c9fd7",
+        "android_client_info": {
+          "package_name": "com.ecommerce.ventasapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIff8s0UhNwbr9tjGNXKxLdtbxJyFFmq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

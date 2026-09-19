@@ -35,14 +35,12 @@ La especificación toma como fuente normativa la prueba técnica original. El pl
 - **Firestore** (proyecto Firebase `catalogo-productos-77ab0`) para usuarios, carrito y pedidos. Config del SDK web en `src/app/firebase.config.ts`.
 - LocalStorage se mantiene solo para el flag de sesión activa en el dispositivo (`currentUser`), ya que es estado local del dispositivo, no un dato compartido.
 - JSON local/mock para productos.
-- Emulador de Firestore (`firebase-tools`, requiere JDK 21+) para pruebas unitarias, de forma que `npm test` no toque la base de datos real. Ver sección 8.
 
 Comandos, sujetos a la versión real del proyecto:
 
 ```text
 npm install
 ionic serve
-ng test
 ionic build
 ionic cordova platform add android
 ionic cordova build android
@@ -127,12 +125,10 @@ Esta decisión es una corrección propuesta de la ambigüedad del documento de a
 
 Debe existir mensaje visible para: campos inválidos, correo duplicado, credenciales incorrectas, producto sin stock, imagen inexistente, carrito vacío, error de carga y ausencia de pedidos/puntos.
 
-## 8. Estrategia de pruebas
+## 8. Validación manual
 
-- Unitarias: validaciones, autenticación, carrito, totales, persistencia y límites de puntos.
-- Las pruebas que tocan Firestore corren contra el **emulador de Firestore** (`firebase-tools`), nunca contra la base de datos real. `npm test` arranca y detiene el emulador automáticamente (`firebase emulators:exec --only firestore ...`). Requiere JDK 21+ instalado (el emulador de Firestore no soporta versiones anteriores).
-- Integración: registro → login → catálogo → carrito → checkout → pedido → resumen.
-- Manual móvil: flujo completo, recarga, cierre/reapertura, navegación y recursos.
+- Flujo móvil completo: registro → login → catálogo → carrito → checkout → pedido → resumen.
+- Recarga, cierre/reapertura, navegación y recursos.
 - Límites de puntos: 0, 9/10/29/30/49/50/79/80%, 999/1000/2999/3000/3999/4000 unidades.
 
 ## 9. Definition of Done

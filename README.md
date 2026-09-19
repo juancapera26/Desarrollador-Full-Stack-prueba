@@ -7,7 +7,6 @@ Aplicacion movil hibrida de comercio electronico construida con Ionic, Angular, 
 Requisitos:
 
 - Node.js 22 o compatible con Angular 20.
-- JDK 21 o superior para ejecutar las pruebas de Firestore.
 - JDK 17 para compilar Android con Cordova.
 - Android SDK y un emulador configurado para generar/probar la APK.
 
@@ -30,19 +29,10 @@ La aplicacion se abre normalmente en `http://localhost:4200`.
 | Comando | Uso |
 | --- | --- |
 | `npm start` | Inicia Angular en modo desarrollo. |
-| `npm test` | Levanta el emulador de Firestore y ejecuta las pruebas en Chrome Headless. |
 | `npm run build` | Genera el build de produccion en `dist/`. |
 | `npm run seed:products` | Crea los productos iniciales que no existan en Firestore. |
 | `npm run android:build` | Compila la APK Android sin instalarla. |
 | `npm run android:run` | Compila, sincroniza e instala la APK en un emulador conectado. |
-
-Para las pruebas, el proyecto usa el emulador local de Firestore en el puerto `8085`. El comando `npm test` lo inicia y lo detiene automaticamente. Si el entorno no encuentra Java, configura temporalmente JDK 21 en PowerShell:
-
-```powershell
-$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot'
-$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
-npm test
-```
 
 Para Android, Cordova/Gradle usa JDK 17:
 
@@ -110,11 +100,11 @@ platforms/android/app/build/outputs/apk/debug/app-debug.apk
 
 ## Estado de la entrega
 
-HU01 a HU11 y los checkpoints 1 a 4 estan implementados y probados. HU12 incluye esta documentacion, las pruebas automatizadas, el build de produccion y la APK Android. El checkpoint final queda para la revision final de Definition of Done.
+HU01 a HU11 y los checkpoints 1 a 4 estan implementados. HU12 incluye esta documentacion, el build de produccion y la APK Android. El checkpoint final queda para la revision final de Definition of Done.
 
 ## Limitaciones conocidas
 
 - Es una prueba tecnica: no incluye pagos reales ni autenticacion Firebase Authentication.
 - Las reglas de Firestore son deliberadamente permisivas para el mock.
 - Las contrasenas se almacenan en texto plano; esto debe cambiarse antes de cualquier uso real.
-- El stock inicial es pequeno, por lo que los umbrales altos de puntos por volumen se validan principalmente con pruebas automatizadas o con datos de demostracion.
+- El stock inicial es pequeno, por lo que los umbrales altos de puntos por volumen se validan con datos de demostracion.

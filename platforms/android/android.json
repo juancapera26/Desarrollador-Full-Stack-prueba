@@ -4,8 +4,106 @@
     "uninstalled": []
   },
   "config_munge": {
-    "files": {}
+    "files": {
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"FirebasexCorePlugin\"><param name=\"android-package\" value=\"org.apache.cordova.firebasex.FirebasexCorePlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"FirebasexAuthPlugin\"><param name=\"android-package\" value=\"org.apache.cordova.firebasex.FirebasexAuthPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"FirebasexFirestorePlugin\"><param name=\"android-package\" value=\"org.apache.cordova.firebasex.FirebasexFirestorePlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<preference name=\"GradlePluginGoogleServicesEnabled\" value=\"true\" />",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
   },
-  "installed_plugins": {},
-  "dependent_plugins": {}
+  "installed_plugins": {
+    "cordova-plugin-firebasex-core": {
+      "ANDROID_FIREBASE_CORE_VERSION": "21.1.1",
+      "ANDROID_FIREBASE_INSTALLATIONS_VERSION": "19.1.0",
+      "ANDROID_GSON_VERSION": "2.14.0",
+      "PACKAGE_NAME": "com.ecommerce.ventasapp"
+    },
+    "cordova-plugin-firebasex-auth": {
+      "SETUP_RECAPTCHA_VERIFICATION": "false",
+      "IOS_ENABLE_APPLE_SIGNIN": "false",
+      "IOS_GOOGLE_SIGNIN_VERSION": "9.1.0",
+      "ANDROID_FIREBASE_AUTH_VERSION": "24.1.0",
+      "ANDROID_PLAY_SERVICES_AUTH_VERSION": "21.6.0",
+      "ANDROID_CREDENTIALS_VERSION": "1.6.0",
+      "ANDROID_GOOGLEID_VERSION": "1.2.0",
+      "PACKAGE_NAME": "com.ecommerce.ventasapp"
+    },
+    "cordova-plugin-firebasex-firestore": {
+      "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
+      "ANDROID_FIREBASE_FIRESTORE_VERSION": "26.3.0",
+      "ANDROID_GRPC_OKHTTP": "1.81.0",
+      "ANDROID_GSON_VERSION": "2.14.0",
+      "PACKAGE_NAME": "com.ecommerce.ventasapp"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "cordova-plugin-firebasex-core.FirebasexCorePlugin",
+      "file": "plugins/cordova-plugin-firebasex-core/www/firebasex-core.js",
+      "pluginId": "cordova-plugin-firebasex-core",
+      "clobbers": [
+        "FirebasexCore"
+      ]
+    },
+    {
+      "id": "cordova-plugin-firebasex-auth.FirebasexAuthPlugin",
+      "file": "plugins/cordova-plugin-firebasex-auth/www/firebasex-auth.js",
+      "pluginId": "cordova-plugin-firebasex-auth",
+      "merges": [
+        "FirebasexAuth"
+      ]
+    },
+    {
+      "id": "cordova-plugin-firebasex-firestore.FirebasexFirestorePlugin",
+      "file": "plugins/cordova-plugin-firebasex-firestore/www/firebasex-firestore.js",
+      "pluginId": "cordova-plugin-firebasex-firestore",
+      "merges": [
+        "FirebasexFirestore"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "cordova-plugin-firebasex-core": "2.0.1",
+    "cordova-plugin-firebasex-auth": "2.0.2",
+    "cordova-plugin-firebasex-firestore": "2.0.4"
+  }
 }

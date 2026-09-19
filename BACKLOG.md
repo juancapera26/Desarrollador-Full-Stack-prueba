@@ -86,7 +86,7 @@ Como usuario, quiero conservar mis datos al recargar o reabrir la app.
 - Usuarios, carrito y pedidos sobreviven a recarga porque viven en Firestore; solo el flag de sesión activa (`currentUser`) vive en LocalStorage del dispositivo.
 - Falla de red/Firestore produce un estado vacío controlado y no rompe la app.
 
-> **Nota de arquitectura (2026-09-17):** por decisión explícita del usuario, esta app usa **Firestore** como backend real para `users` (implementado en HU01) y, cuando se autoricen HU04–HU08, para carrito y pedidos. Ver `SPEC.md` sección 2 y `HANDOFF.md` para el detalle completo. Las menciones a "LocalStorage" en historias no implementadas aún deben leerse como "Firestore", salvo la sesión activa del dispositivo (`currentUser`).
+> **Nota de arquitectura (2026-09-17):** por decisión explícita del usuario, esta app usa **Firestore** como backend real para `users` (implementado en HU01) y, cuando se autoricen HU04–HU08, para carrito y pedidos. Ver `SPEC.md` sección 2 para el detalle completo. Las menciones a "LocalStorage" en historias no implementadas aún deben leerse como "Firestore", salvo la sesión activa del dispositivo (`currentUser`).
 
 ### HU09 — Puntos por ventas
 

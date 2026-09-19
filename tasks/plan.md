@@ -44,7 +44,7 @@ La cadena principal es secuencial por dependencia. Mientras se implementa una fa
 ## Verificaciones de salida
 
 - Cada checkpoint debe compilar y dejar el flujo anterior funcionando.
-- Antes de Android: pruebas unitarias, flujo manual y revisión de errores de consola.
+- Antes de Android: flujo manual y revisión de errores de consola.
 - Antes de entregar: instalación limpia, APK ejecutable y README actualizado.
 
 ## Decisión pendiente

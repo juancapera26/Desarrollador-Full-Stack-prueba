@@ -5,24 +5,20 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
-    "test": "firebase emulators:exec --only firestore --project catalogo-productos-77ab0 \"ng test --watch=false --browsers=ChromeHeadlessNoSandbox\"",
-    "www:sync": "if exist www rmdir /s /q www && xcopy \"dist\\prueba-desarrollador-full-stack\\browser\" www /E /I /Y",
+    "www:sync": "node scripts/sync-www.mjs",
     "android:build": "npm run build && npm run www:sync && npx cordova build android",
     "android:run": "npm run build && npm run www:sync && npx cordova run android",
     "seed:products": "node scripts/seed-products.mjs"
   },
   "dependencies": {
-    "@angular/animations": "^20.3.0",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
-    "@angular/platform-browser-dynamic": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@ionic/angular": "^8.7.3",
     "firebase": "^12.19.0",
-    "ionicons": "^7.4.0",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.1"
@@ -31,21 +27,36 @@
     "@angular-devkit/build-angular": "^20.3.0",
     "@angular/cli": "^20.3.0",
     "@angular/compiler-cli": "^20.3.0",
-    "@types/jasmine": "~5.1.0",
     "cordova": "^13.0.0",
     "cordova-android": "^15.1.0",
+    "cordova-plugin-firebasex-auth": "^2.0.2",
+    "cordova-plugin-firebasex-core": "^2.0.1",
+    "cordova-plugin-firebasex-firestore": "^2.0.4",
     "firebase-tools": "^15.30.2",
-    "jasmine-core": "~5.9.0",
-    "karma": "~6.4.4",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "^2.2.1",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.9.2"
   },
   "cordova": {
     "platforms": [
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-firebasex-auth": {
+        "ANDROID_FIREBASE_CONFIG_FILEPATH": "resources/android/google-services.json",
+        "SETUP_RECAPTCHA_VERIFICATION": "false",
+        "IOS_ENABLE_APPLE_SIGNIN": "false",
+        "IOS_GOOGLE_SIGNIN_VERSION": "9.1.0",
+        "ANDROID_FIREBASE_AUTH_VERSION": "24.1.0",
+        "ANDROID_PLAY_SERVICES_AUTH_VERSION": "21.6.0",
+        "ANDROID_CREDENTIALS_VERSION": "1.6.0",
+        "ANDROID_GOOGLEID_VERSION": "1.2.0"
+      },
+      "cordova-plugin-firebasex-firestore": {
+        "ANDROID_FIREBASE_CONFIG_FILEPATH": "resources/android/google-services.json",
+        "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
+        "ANDROID_FIREBASE_FIRESTORE_VERSION": "26.3.0",
+        "ANDROID_GRPC_OKHTTP": "1.81.0",
+        "ANDROID_GSON_VERSION": "2.14.0"
+      }
+    }
   }
 }

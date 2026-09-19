@@ -325,6 +325,16 @@ dependencies {
 
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
+    implementation "com.google.firebase:firebase-core:21.1.1"
+    implementation "com.google.firebase:firebase-installations:19.1.0"
+    implementation "com.google.code.gson:gson:2.14.0"
+    implementation "com.google.firebase:firebase-auth:24.1.0"
+    implementation "com.google.android.gms:play-services-auth:21.6.0"
+    implementation "androidx.credentials:credentials:1.6.0"
+    implementation "androidx.credentials:credentials-play-services-auth:1.6.0"
+    implementation "com.google.android.libraries.identity.googleid:googleid:1.2.0"
+    implementation "com.google.firebase:firebase-firestore:26.3.0"
+    implementation "io.grpc:grpc-okhttp:1.81.0"
     // SUB-PROJECT DEPENDENCIES END
 }
 

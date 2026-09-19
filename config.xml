@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget id="com.prueba.desarrollador.fullstack" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ecommerce.ventasapp" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Comercio</name>
-  <description>Prueba técnica de comercio electrónico</description>
-  <author email="no-reply@example.test" href="https://example.test">Proyecto Full Stack</author>
+  <description>Aplicación móvil de comercio electrónico</description>
   <content src="index.html" />
   <access origin="*" />
   <platform name="android">
+    <resource-file src="resources/android/google-services.json" target="app/google-services.json" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
