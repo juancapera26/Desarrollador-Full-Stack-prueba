@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title">
+  <title>Reloj clásico</title>
+  <rect width="800" height="600" rx="32" fill="#edf5f2"/>
+  <circle cx="640" cy="112" r="150" fill="#d8ebe4"/>
+  <path d="M342 76h116v126H342zM342 398h116v126H342z" fill="#243246"/>
+  <circle cx="400" cy="300" r="130" fill="#d9b36c" stroke="#243246" stroke-width="22"/>
+  <circle cx="400" cy="300" r="101" fill="#fffdf6"/>
+  <path d="M400 300V238M400 300l47 28" stroke="#243246" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="400" cy="300" r="12" fill="#d16f38"/>
+</svg>
