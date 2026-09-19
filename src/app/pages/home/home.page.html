@@ -23,8 +23,12 @@
       <div class="header-actions">
         <ng-container *ngIf="currentUser; else guestActions">
           <div class="account-actions" role="group" aria-label="Acciones de cuenta">
-            <ion-button fill="clear" class="points-link" (click)="goToPoints()">
-              Mis puntos
+            <ion-button fill="clear" class="points-link" (click)="goToPoints()" aria-label="Ver mis puntos y recompensas">
+              <span class="points-copy">
+                <strong>Mis puntos</strong>
+                <small>Ver recompensas</small>
+              </span>
+              <span class="points-arrow" aria-hidden="true">&#8594;</span>
             </ion-button>
             <ion-button
               fill="clear"
@@ -112,7 +116,10 @@
           <ion-card-title>{{ product.name }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p class="product-description">{{ product.description }}</p>
+          <p class="product-description">
+            <span class="description-label">Detalle del producto</span>
+            {{ product.description }}
+          </p>
           <p class="product-price">
             {{ product.price | currency:'COP':'symbol':'1.0-0' }}
           </p>

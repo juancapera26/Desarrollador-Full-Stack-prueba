@@ -103,6 +103,9 @@ h1 {
 .cart-item {
   display: grid;
   grid-template-columns: 170px minmax(0, 1fr);
+  grid-template-areas:
+    "image header"
+    "image content";
   min-width: 0;
   margin: 0;
   overflow: hidden;
@@ -112,12 +115,15 @@ h1 {
   box-shadow: var(--app-shadow-sm);
 }
 .cart-item > img {
+  grid-area: image;
   width: 170px;
   height: 100%;
   min-height: 210px;
   object-fit: cover;
 }
 .cart-item ion-card-header {
+  grid-area: header;
+  min-width: 0;
   padding: 22px 22px 6px;
 }
 .cart-item ion-card-title {
@@ -126,6 +132,8 @@ h1 {
   font-weight: 750;
 }
 .cart-item ion-card-content {
+  grid-area: content;
+  min-width: 0;
   padding: 8px 22px 22px;
 }
 .unit-price {
@@ -155,11 +163,13 @@ h1 {
   font-size: 12px;
 }
 .item-subtotal {
-  margin: 20px 0 4px;
+  margin: 20px 0 8px;
+  overflow-wrap: anywhere;
   color: var(--app-ink);
   font-size: 17px;
   font-weight: 800;
 }
+.cart-item ion-card-content > ion-button { margin: 0; --padding-start: 0; --padding-end: 0; font-weight: 750; }
 .summary-card {
   position: sticky;
   top: 20px;
@@ -221,6 +231,9 @@ h1 {
   }
   .cart-item {
     grid-template-columns: 104px minmax(0, 1fr);
+    grid-template-areas:
+      "image header"
+      "image content";
   }
   .cart-item > img {
     width: 104px;
