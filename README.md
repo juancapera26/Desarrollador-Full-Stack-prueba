@@ -73,11 +73,11 @@ Reglas de puntos:
 
 ## Firebase y datos de prueba
 
-El proyecto Firebase configurado es `catalogo-productos-77ab`. Para desplegar reglas se necesita tener Firebase CLI autenticado y permisos sobre el proyecto:
+El proyecto Firebase configurado es `catalogo-productos-77ab0`. Para desplegar reglas se necesita tener Firebase CLI autenticado y permisos sobre el proyecto:
 
 ```powershell
 npx firebase login
-npx firebase deploy --only firestore:rules --project catalogo-productos-77ab
+npx firebase deploy --only firestore --project catalogo-productos-77ab0
 ```
 
 Luego se pueden crear los tres productos iniciales:
