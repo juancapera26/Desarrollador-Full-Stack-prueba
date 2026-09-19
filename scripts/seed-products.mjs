@@ -3,9 +3,9 @@ import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 const app = initializeApp({
   apiKey: 'AIzaSyDIff8s0UhNwbr9tjGNXxLdtbxJyFFmq0',
-  authDomain: 'catalogo-productos-77ab0.firebaseapp.com',
-  projectId: 'catalogo-productos-77ab0',
-  storageBucket: 'catalogo-productos-77ab0.firebasestorage.app',
+  authDomain: 'catalogo-productos-77ab.firebaseapp.com',
+  projectId: 'catalogo-productos-77ab',
+  storageBucket: 'catalogo-productos-77ab.firebasestorage.app',
   messagingSenderId: '907993303542',
   appId: '1:907993303542:android:4716c543d6b28d9f7c9fd7',
 });
@@ -15,26 +15,26 @@ const products = [
   {
     id: 1,
     name: 'Camiseta urbana',
-    description: 'Algodon suave, corte regular y acabado ligero para combinar a diario.',
+    description: 'Camiseta comoda de algodon para uso diario.',
     price: 45000,
     stock: 12,
-    image: 'assets/images/products/camiseta-urbana.svg',
+    image: 'https://picsum.photos/id/1/800/600',
   },
   {
     id: 2,
     name: 'Mochila exploradora',
-    description: 'Compartimento principal amplio y tiras acolchadas para llevar tus esenciales.',
+    description: 'Mochila resistente para acompanarte en tus recorridos.',
     price: 120000,
     stock: 7,
-    image: 'assets/images/products/mochila-exploradora.svg',
+    image: 'https://picsum.photos/id/2/800/600',
   },
   {
     id: 3,
     name: 'Reloj clasico',
-    description: 'Caja metalica y correa clasica para completar looks de oficina o fin de semana.',
+    description: 'Reloj de diseno sobrio para cualquier ocasion.',
     price: 185000,
     stock: 0,
-    image: 'assets/images/products/reloj-clasico.svg',
+    image: 'https://picsum.photos/id/3/800/600',
   },
 ];
 

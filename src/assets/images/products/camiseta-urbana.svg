@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title">
-  <title>Camiseta urbana</title>
-  <rect width="800" height="600" rx="32" fill="#eef3ff"/>
-  <circle cx="650" cy="100" r="170" fill="#dce6ff"/>
-  <path d="M286 178 184 226l62 116 63-34v144h182V308l63 34 62-116-102-48-52 72h-62l-52-72Z" fill="#2860e8"/>
-  <path d="M338 176c7 42 117 42 124 0" fill="none" stroke="#173aa9" stroke-width="16" stroke-linecap="round"/>
-  <path d="M307 442h186" stroke="#173aa9" stroke-width="7" stroke-linecap="round" opacity=".45"/>
-</svg>
