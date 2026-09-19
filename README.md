@@ -98,9 +98,6 @@ platforms/android/app/build/outputs/apk/debug/app-debug.apk
 
 `www/`, `dist/` y `platforms/` son salidas generadas y estan ignoradas por Git. Para una entrega reproducible se deben generar con los comandos anteriores.
 
-## Estado de la entrega
-
-HU01 a HU11 y los checkpoints 1 a 4 estan implementados. HU12 incluye esta documentacion, el build de produccion y la APK Android. El checkpoint final queda para la revision final de Definition of Done.
 
 ## Limitaciones conocidas
 
