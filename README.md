@@ -53,9 +53,9 @@ La aplicacion es una SPA Ionic Angular empaquetada como APK mediante Cordova.
 - `src/assets/data/products.json`: catalogo local de respaldo con tres productos.
 - `src/app/firebase.config.ts`: configuracion publica del SDK web de Firebase.
 - `firestore.rules`: reglas de Firestore usadas por esta prueba tecnica.
-- `config.xml`: configuracion de Cordova y el identificador Android `com.prueba.desarrollador.fullstack`.
+- `config.xml`: configuracion de Cordova y el identificador Android `com.ecommerce.ventasapp`.
 
-Firestore almacena usuarios, carritos, productos y pedidos. La sesion activa del dispositivo se mantiene en LocalStorage. Los pedidos confirmados alimentan el resumen de puntos del usuario actual.
+Firestore almacena perfiles, carritos, productos y pedidos. Firebase Authentication administra la sesion con su persistencia propia; la aplicacion no guarda contrasenas ni tokens en LocalStorage. Los pedidos confirmados alimentan el resumen de puntos del usuario actual.
 
 ## Flujo funcional
 
@@ -86,7 +86,7 @@ Luego se pueden crear los tres productos iniciales:
 npm run seed:products
 ```
 
-El script no sobrescribe productos que ya existen. Las reglas actuales y el almacenamiento de contrasenas son decisiones aceptables solo para esta prueba tecnica; no representan una configuracion de produccion segura.
+El script no sobrescribe productos que ya existen. Para registrar o iniciar sesion, habilita el proveedor "Correo electronico/Contrasena" en Firebase Authentication.
 
 ## APK
 
@@ -104,7 +104,7 @@ HU01 a HU11 y los checkpoints 1 a 4 estan implementados. HU12 incluye esta docum
 
 ## Limitaciones conocidas
 
-- Es una prueba tecnica: no incluye pagos reales ni autenticacion Firebase Authentication.
-- Las reglas de Firestore son deliberadamente permisivas para el mock.
-- Las contrasenas se almacenan en texto plano; esto debe cambiarse antes de cualquier uso real.
+- Es una prueba tecnica: no incluye pagos reales.
+- El descuento de inventario se realiza desde el cliente y las reglas solo permiten reducciones de stock; para una tienda real conviene mover checkout a una funcion backend transaccional.
+- La configuracion web de Firebase debe corresponder a una aplicacion web registrada en el proyecto. `google-services.json` solo configura la aplicacion Android.
 - El stock inicial es pequeno, por lo que los umbrales altos de puntos por volumen se validan con datos de demostracion.

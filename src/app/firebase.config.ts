@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 // Config pública del SDK web de Firebase para el proyecto "catalogo-productos-77ab0".
@@ -16,3 +17,4 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseApp);
+export const auth = getAuth(firebaseApp);

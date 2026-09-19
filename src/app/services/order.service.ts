@@ -3,6 +3,7 @@ import { collection, doc, runTransaction } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { Cart } from '../models/cart.model';
 import { Order } from '../models/order.model';
+import { isProduct } from '../models/data-guards';
 
 export type CreateOrderResult =
   | { ok: true; order: Order }
@@ -30,8 +31,9 @@ export class OrderService {
         const currentCartSnapshot = await transaction.get(doc(db, this.cartsCollection, userId));
 
         const items = cart.items.map((item, index) => {
-          const product = productSnapshots[index].data() as typeof item.product | undefined;
-          if (!product || product.stock < item.quantity) throw new Error('invalid-stock');
+          const rawProduct: unknown = productSnapshots[index].data();
+          if (!isProduct(rawProduct) || rawProduct.stock < item.quantity) throw new Error('invalid-stock');
+          const product = rawProduct;
 
           transaction.update(productRefs[index], { stock: product.stock - item.quantity });
           return {
@@ -64,6 +66,7 @@ export class OrderService {
       if (error instanceof Error && ['empty-cart', 'invalid-stock'].includes(error.message)) {
         return { ok: false, reason: error.message as 'empty-cart' | 'invalid-stock' };
       }
+      console.error('[OrderService] No se pudo crear el pedido.', error);
       return { ok: false, reason: 'unknown-error' };
     }
   }

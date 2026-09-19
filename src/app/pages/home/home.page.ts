@@ -120,8 +120,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  logout(): void {
-    this.authService.logout();
+  async logout(): Promise<void> {
+    await this.authService.logout();
     this.router.navigateByUrl('/login');
   }
 
@@ -160,4 +160,3 @@ export class HomePage implements OnInit {
     this.cartMessageTimer = undefined;
   }
 }
-

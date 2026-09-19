@@ -28,7 +28,8 @@ export class LoginPage implements OnInit {
   submitting = false;
   errorMessage = '';
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.authService.whenReady();
     const requestedUrl = this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
     if (requestedUrl?.startsWith('/') && !requestedUrl.startsWith('//')) {
       this.returnUrl = requestedUrl;

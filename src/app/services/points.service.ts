@@ -3,6 +3,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { PointsSummary } from '../models/points-summary.model';
 import { Order } from '../models/order.model';
+import { isOrder } from '../models/data-guards';
 
 @Injectable({ providedIn: 'root' })
 export class PointsService {
@@ -30,37 +31,29 @@ export class PointsService {
   }
 
   async getSummary(userId: string): Promise<PointsSummary> {
-    const emptySummary: PointsSummary = {
-      totalSales: 0,
-      totalUnits: 0,
-      salesPoints: 0,
-      volumePoints: 0,
-      totalPoints: 0,
-      orderCount: 0,
+    const ordersQuery = query(this.ordersCollection, where('userId', '==', userId));
+    const snapshot = await getDocs(ordersQuery);
+    const orders: Order[] = [];
+    snapshot.docs.forEach((orderSnapshot) => {
+      const data: unknown = orderSnapshot.data();
+      if (!isOrder(data)) throw new Error(`invalid-order-data:${orderSnapshot.id}`);
+      orders.push(data);
+    });
+    const totalSales = orders.reduce((total, order) => total + order.total, 0);
+    const totalUnits = orders.reduce(
+      (total, order) => total + order.items.reduce((itemTotal, item) => itemTotal + item.quantity, 0),
+      0,
+    );
+    const salesPoints = this.calculateSalesPoints(totalSales);
+    const volumePoints = this.calculateVolumePoints(totalUnits);
+
+    return {
+      totalSales,
+      totalUnits,
+      salesPoints,
+      volumePoints,
+      totalPoints: salesPoints + volumePoints,
+      orderCount: orders.length,
     };
-
-    try {
-      const ordersQuery = query(this.ordersCollection, where('userId', '==', userId));
-      const snapshot = await getDocs(ordersQuery);
-      const orders = snapshot.docs.map((orderSnapshot) => orderSnapshot.data() as Order);
-      const totalSales = orders.reduce((total, order) => total + order.total, 0);
-      const totalUnits = orders.reduce(
-        (total, order) => total + order.items.reduce((itemTotal, item) => itemTotal + item.quantity, 0),
-        0,
-      );
-      const salesPoints = this.calculateSalesPoints(totalSales);
-      const volumePoints = this.calculateVolumePoints(totalUnits);
-
-      return {
-        totalSales,
-        totalUnits,
-        salesPoints,
-        volumePoints,
-        totalPoints: salesPoints + volumePoints,
-        orderCount: orders.length,
-      };
-    } catch {
-      return emptySummary;
-    }
   }
 }

@@ -49,6 +49,10 @@ export class RegisterPage {
         this.errorMessage =
           result.reason === 'duplicate-email'
             ? 'Ya existe un usuario registrado con ese correo.'
+            : result.reason === 'weak-password'
+              ? 'La contraseña debe tener al menos 6 caracteres.'
+              : result.reason === 'invalid-email'
+                ? 'Ingresa un correo electrónico válido.'
             : 'No se pudo completar el registro. Intenta nuevamente.';
         return;
       }

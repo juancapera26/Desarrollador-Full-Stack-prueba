@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { Cart } from '../models/cart.model';
-import { CartItem } from '../models/cart-item.model';
+import { isCart } from '../models/data-guards';
 import { Product } from '../models/product.model';
 
 export type AddToCartResult =
@@ -18,15 +18,14 @@ export class CartService {
   private readonly cartsCollection = 'carts';
 
   async getCart(userId: string): Promise<Cart> {
-    try {
-      const snapshot = await getDoc(doc(db, this.cartsCollection, userId));
-      if (!snapshot.exists()) return { userId, items: [] };
+    const snapshot = await getDoc(doc(db, this.cartsCollection, userId));
+    if (!snapshot.exists()) return { userId, items: [] };
 
-      const data = snapshot.data() as Partial<Cart>;
-      return { userId, items: Array.isArray(data.items) ? (data.items as CartItem[]) : [] };
-    } catch {
-      return { userId, items: [] };
+    const data: unknown = snapshot.data();
+    if (!isCart(data) || data.userId !== userId) {
+      throw new Error('invalid-cart-data');
     }
+    return { userId, items: data.items };
   }
 
   async addToCart(userId: string, product: Product): Promise<AddToCartResult> {
@@ -50,7 +49,8 @@ export class CartService {
 
       await setDoc(doc(db, this.cartsCollection, userId), updatedCart);
       return { ok: true, cart: updatedCart };
-    } catch {
+    } catch (error) {
+      console.error('[CartService] No se pudo agregar el producto.', error);
       return { ok: false, reason: 'unknown-error' };
     }
   }
@@ -72,7 +72,8 @@ export class CartService {
       };
       await this.saveCart(updatedCart);
       return { ok: true, cart: updatedCart };
-    } catch {
+    } catch (error) {
+      console.error('[CartService] No se pudo actualizar la cantidad.', error);
       return { ok: false, reason: 'unknown-error' };
     }
   }
